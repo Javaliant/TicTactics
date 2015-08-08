@@ -1,2 +1,7 @@
 *.class
+test
+source
 temp
+manifest.txt
+TicTacTest.java
+TicTacticsTest.java
