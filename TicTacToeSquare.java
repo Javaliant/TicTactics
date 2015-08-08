@@ -26,6 +26,10 @@ public class TicTacToeSquare {
 	public void clear() {
 		button.setText("");
 	}
+
+	public boolean equivalentTo(TicTacToeSquare target) {
+		return !button.getText().isEmpty() && button.getText().equals(target.button().getText());
+	}
 }
 
 
