@@ -1,17 +1,16 @@
-enum Player {
-	O("O", "-fx-text-fill: gold;"),
-	X("X", "-fx-text-fill: darkred");
+/* Author: Luigi Vincent
+Player Enum to be used in Tic Tac Toe
+facilitates tracking the current player, provides symbol & style to be used
+*/
 
-	private final String symbol;
+public enum Player {
+	X("-fx-text-fill: darkred;"),
+	O("-fx-text-fill: gold;");
+
 	private final String style;
 
-	Player(String symbol, String style) {
-		this.symbol = symbol;
+	Player(String style) {
 		this.style = style;
-	}
-
-	public String getSymbol() {
-		return symbol;
 	}
 
 	public String getStyle() {

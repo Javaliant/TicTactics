@@ -1,20 +1,23 @@
 /* Author: Luigi Vincent
-
+Object to represent idea of tic tac toe squares
 */
 
 import javafx.scene.control.Button;
 
 public class TicTacToeSquare {
 	private Button button = new Button();
-	private final int SQUARE_SIZE = 70;
+	private final int SQUARE_LENGTH = 70;
 
-	public TicTacToeSquare() {
-		button.setMinSize(SQUARE_SIZE, SQUARE_SIZE);
+	TicTacToeSquare(TicTacticsGame game, TicTacToeBoard board, Position position) {
+		button.setMinSize(SQUARE_LENGTH, SQUARE_LENGTH);
 		button.setOnAction(e -> {
 			if (button.getText().isEmpty()) {
-				button.setText(TicTacTest.checkCurrentPlayer().getSymbol());
-				button.setStyle(TicTacTest.checkCurrentPlayer().getStyle());
-				//TicTacToeBoard.evaluateBoard();
+				button.setText(game.getCurrentPlayer().toString());
+				button.setStyle(game.getCurrentPlayer().getStyle());
+				board.evaluateState();
+				game.endTurn();
+				game.board().disable();
+				game.board().enable(position);
 			}
 		});
 	}
@@ -23,51 +26,12 @@ public class TicTacToeSquare {
 		return button;
 	}
 
-	public void clear() {
-		button.setText("");
-	}
-
 	public boolean equivalentTo(TicTacToeSquare target) {
 		return !button.getText().isEmpty() && button.getText().equals(target.button().getText());
 	}
+
+	public void reset() {
+		button.setText("");
+		button.setDisable(false);
+	}
 }
-
-
-
-/*import javafx.scene.control.Button;
-
-public class TicTacToeSquare {
-	private boolean filled;
-	static boolean turnTracker;
-	private Button square = new Button();
-	private final int SQUARE_SIZE = 100;
-
-	TicTacToeSquare() {
-		square.setMinHeight(SQUARE_SIZE);
-		square.setMinWidth(SQUARE_SIZE);
-		square.setOnAction(e -> {
-			if (square.getText().isEmpty()) {
-				square.setText(turnTracker ? "O" : "X");
-				square.setStyle(
-					turnTracker ? "-fx-text-fill: gold;" : "-fx-text-fill: darkred;");
-				filled = true;
-				turnTracker = !turnTracker;
-				TicTacToe.evaluateBoard();
-			}
-		});
-	}
-
-	public Button button() {
-		return square;
-	}
-
-	public boolean equals(TicTacToeSquare target) {
-		return filled && square.getText().equals(target.button().getText());
-	}
-
-	public void clear() {
-		filled = false;
-		square.setText("");
-		square.setDisable(false);
-	}
-}*/

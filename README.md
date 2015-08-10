@@ -1,4 +1,4 @@
-#Tic Tacics A.K.A. Ultimate Tic Tac Toe
+#Tic Tactics A.K.A. Ultimate Tic Tac Toe
 
 **Features**:
 * Score Display.

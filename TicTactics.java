@@ -1,11 +1,10 @@
 /* Author: Luigi Vincent
-Main Game Class
+Main Class to run the tic tactics game
+Created for learning/fun and to complete CodeReview's Ultimate Tic Tac Toe community challenge:
 */
 
-
-
-
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class TicTactics extends Application {
@@ -15,8 +14,8 @@ public class TicTactics extends Application {
 
 	@Override
 	public void start(Stage stage) {
-
-		stage.setTitle("Tic Tactics By Legato");
+		stage.setTitle("Tic Tactics");
+		stage.setScene(new Scene(new TicTacticsGame(stage)));
 		stage.show();
 	}
 }
