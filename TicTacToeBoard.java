@@ -23,16 +23,13 @@ public class TicTacToeBoard extends GridPane {
 	}
 
 	public void evaluateState() {
-		for (int i = 0, j = 0; i < 3; i++) {
-			// Horizontal
-			if(checkSet(j++, j++, j++)) {
-				return;
-			}
-			// Vertical
-			if(checkSet(i, i + 3, i + 6)) {
+		for (int horizontal = 0, vertical = 0; horizontal < NUMBER_OF_SQUARES; horizontal += 3) {
+			if (checkSet(vertical, vertical + 3, vertical++ + 6) 
+			||  checkSet(horizontal, horizontal + 1, horizontal + 2)) {
 				return;
 			}
 		}
+
 		// Diagonal
 		if(checkSet(0, 4, 8) || checkSet(2, 4, 6)) {
 			return;
@@ -41,7 +38,7 @@ public class TicTacToeBoard extends GridPane {
 		if (++boardCounter == NUMBER_OF_SQUARES) {
 			winner = Winner.TIE;
 			captured = true;
-			game.evaluateState();
+			game.evaluateBoard();
 			styleBoard();
 			return;
 		}
@@ -54,9 +51,9 @@ public class TicTacToeBoard extends GridPane {
 				if (!captured) {
 					winner = board[square1].button().getText().equals("X") ? Winner.X : Winner.O;
 					captured = true;
-					game.evaluateState();
-					styleBoard();
+					game.evaluateBoard();
 				}
+				styleBoard();
 				return true;
 			}
 		}
@@ -105,6 +102,7 @@ public class TicTacToeBoard extends GridPane {
 	public void reset() {
 		captured = false;
 		winner = Winner.NONE;
+		boardCounter = 0;
 		for (int i = 0; i < board.length; i++) {
 			board[i].reset();
 		}

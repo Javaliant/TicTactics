@@ -22,13 +22,9 @@ public class TicTacticsBoard extends GridPane {
 	}
 
 	public void evaluateState() {
-		for (int i = 0, j = 0; i < 3; i++) {
-			// Horizontal
-			if(checkSet(j++, j++, j++)) {
-				return;
-			}
-			// Vertical
-			if(checkSet(i, i + 3, i + 6)) {
+		for (int horizontal = 0, vertical = 0; horizontal < NUMBER_OF_BOARDS; horizontal += 3) {
+			if (checkSet(vertical, vertical + 3, vertical++ + 6) 
+			||  checkSet(horizontal, horizontal + 1, horizontal + 2)) {
 				return;
 			}
 		}

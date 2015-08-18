@@ -267,7 +267,7 @@ public class TicTacticsGame extends BorderPane {
 		currentPlayer = currentPlayer == Player.X ? Player.O : Player.X;
 	}
 
-	public void evaluateState() {
+	public void evaluateBoard() {
 		board.evaluateState();
 	}
 
