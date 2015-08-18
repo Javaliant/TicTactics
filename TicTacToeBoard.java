@@ -9,6 +9,7 @@ public class TicTacToeBoard extends GridPane {
 	public int boardCounter;
 	private TicTacToeSquare[] board = new TicTacToeSquare[NUMBER_OF_SQUARES];
 	private TicTacticsGame game;
+	private boolean captured = false;
 	private Winner winner = Winner.NONE;
 
 	TicTacToeBoard(TicTacticsGame game) {
@@ -39,6 +40,8 @@ public class TicTacToeBoard extends GridPane {
 
 		if (++boardCounter == NUMBER_OF_SQUARES) {
 			winner = Winner.TIE;
+			captured = true;
+			game.evaluateState();
 			styleBoard();
 			return;
 		}
@@ -48,8 +51,12 @@ public class TicTacToeBoard extends GridPane {
 		if (boardCounter >= 2) {
 			if (board[square1].equivalentTo(board[square2]) 
 			&& board[square2].equivalentTo(board[square3])) {
-				winner = board[square1].button().getText().equals("X") ? Winner.X : Winner.O;
-				styleBoard();
+				if (!captured) {
+					winner = board[square1].button().getText().equals("X") ? Winner.X : Winner.O;
+					captured = true;
+					game.evaluateState();
+					styleBoard();
+				}
 				return true;
 			}
 		}
@@ -57,7 +64,7 @@ public class TicTacToeBoard extends GridPane {
 	}
 
 	public boolean equivalentTo(TicTacToeBoard target) {
-		return winner != Winner.NONE && winner == target.winner;
+		return winner != Winner.NONE && (winner == target.winner() || target.winner() == Winner.TIE);
 	}
 
 	public Winner winner() {
@@ -82,7 +89,22 @@ public class TicTacToeBoard extends GridPane {
 		}
 	}
 
+	public boolean isCaptured() {
+		return captured;
+	}
+
+	public boolean isFilled() {
+		for (TicTacToeSquare square : board) {
+			if (square.button().getText().isEmpty()) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public void reset() {
+		captured = false;
+		winner = Winner.NONE;
 		for (int i = 0; i < board.length; i++) {
 			board[i].reset();
 		}

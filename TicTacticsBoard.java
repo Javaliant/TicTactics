@@ -1,12 +1,12 @@
 /* Author: Luigi Vincent
-Board class to represent idea of tic tac toe board
+Board class to represent idea of Tic Tactics board
 */
 
 import javafx.scene.layout.GridPane;
 
 public class TicTacticsBoard extends GridPane {
 	private final int NUMBER_OF_BOARDS = 9;
-	public int boardCounter;
+	public int boardCounter = 1;
 	private TicTacToeBoard[] board = new TicTacToeBoard[NUMBER_OF_BOARDS];
 	private TicTacticsGame game;
 
@@ -44,7 +44,7 @@ public class TicTacticsBoard extends GridPane {
 	}
 
 	private boolean checkSet(int innerBoard1, int innerBoard2, int innerBoard3) {
-		if (boardCounter >= 4) {
+		if (boardCounter >= 3) {
 			if (board[innerBoard1].equivalentTo(board[innerBoard2]) 
 			&& board[innerBoard2].equivalentTo(board[innerBoard3])) {
 				game.endPrompt(game.checkWinner(board[innerBoard1].winner().toString()) + " wins!");
@@ -63,7 +63,11 @@ public class TicTacticsBoard extends GridPane {
 	public void enable(Position position) {
 		for (int i = 0; i < Position.values().length; i++) {
 			if (position == Position.values()[i]) {
-				board[i].enable();
+				if (board[i].isCaptured()) {
+					enableAll();
+				} else {
+					board[i].enable();
+				}
 				break;
 			}
 		}
@@ -71,7 +75,7 @@ public class TicTacticsBoard extends GridPane {
 
 	public void enableAll() {
 		for (TicTacToeBoard b : board) {
-			b.disable();
+			b.enable();
 		}
 	}
 

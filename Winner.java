@@ -1,7 +1,4 @@
-
-
-
-
+/* Author: Luigi Vincent */
 
 public enum Winner {
 	NONE(""),

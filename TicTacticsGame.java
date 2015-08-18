@@ -1,5 +1,5 @@
 /* Author: Luigi Vincent
-Tic Tac Toe Game Class
+Tic Tactics Game Class
 Has menus, score tracking, name adding, reset features, mnemonic parsing, and keyboard shortcuts
 */
 
@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.text.Text;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -108,6 +109,13 @@ public class TicTacticsGame extends BorderPane {
 			resetItem
 		);
 
+		MenuItem howToItem = new MenuItem("How to _play");
+		howToItem.setAccelerator(new KeyCodeCombination(KeyCode.H, KeyCombination.SHORTCUT_DOWN));
+		howToItem.setOnAction(e -> showGameRules());
+
+		Menu helpMenu = new Menu("_Help");
+		helpMenu.getItems().add(howToItem);
+
 		activateMnemonics(
 			gameMenu,
 			newGameItem,
@@ -115,11 +123,13 @@ public class TicTacticsGame extends BorderPane {
 			scoreMenu,
 			addItem,
 			trackItem,
-			resetItem
+			resetItem,
+			helpMenu,
+			howToItem
 		);
 
 		MenuBar menuBar = new MenuBar();
-		menuBar.getMenus().addAll(gameMenu, scoreMenu);
+		menuBar.getMenus().addAll(gameMenu, scoreMenu, helpMenu);
 		return menuBar;
 	}
 
@@ -237,8 +247,28 @@ public class TicTacticsGame extends BorderPane {
 		}
 	}
 
+	public void showGameRules() {
+		Stage stage = new Stage();
+		TextArea area = new TextArea();
+		area.setEditable(false);
+		area.setText("1. Each turn, you mark one of the small squares."
+			+ "\n2. When you get three in a row on a small board, you’ve won that board."
+			+ "\n3. To win the game, you need to win three small boards in a row."
+			+ "\n4. Tied boards may count for either X or O."
+			+ "\n\nYou don't get to pick the board you play on:"
+			+ "\n*Whichever square your opponent picks corresponds to the board you must play in"
+			+ "\n*If your opponent sends you to an already won board, you may play anywhere");
+		stage.setScene(new Scene(area));
+		stage.setTitle("Rules");
+		stage.show();
+	}
+
 	public void endTurn() {
 		currentPlayer = currentPlayer == Player.X ? Player.O : Player.X;
+	}
+
+	public void evaluateState() {
+		board.evaluateState();
 	}
 
 	public TicTacticsBoard board() {

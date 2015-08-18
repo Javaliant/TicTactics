@@ -32,6 +32,7 @@ public class TicTacToeSquare {
 
 	public void reset() {
 		button.setText("");
+		button.setStyle("");
 		button.setDisable(false);
 	}
 }
