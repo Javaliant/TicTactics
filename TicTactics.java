@@ -14,7 +14,7 @@ public class TicTactics extends Application {
 
 	@Override
 	public void start(Stage stage) {
-		stage.setTitle("Tic Tactics");
+		stage.setTitle("Tic Tactics by Legato");
 		stage.setScene(new Scene(new TicTacticsGame(stage)));
 		stage.show();
 	}
