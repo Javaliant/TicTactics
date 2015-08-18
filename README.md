@@ -7,3 +7,4 @@
 * Adding in player name(s).
 
 Part of a series of simple apps made for the sake of learning.
+Try it out: [Tic Tactics](https://github.com/Javaliant/TicTactics/blob/master/Tic%20Tactics.exe?raw=true)
