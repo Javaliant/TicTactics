@@ -1,5 +1,5 @@
 #Tic Tactics A.K.A. Ultimate Tic-Tac-Toe
-[![Code Review](http://www.zomis.net/codereview/shield/?qid=101253)](http://codereview.stackexchange.com/q/101253/49181)
+[![Code Review](http://www.zomis.net/codereview/shield/?qid=101253&mode=score)](http://codereview.stackexchange.com/q/101253/49181)
 
 
 **Features**:
