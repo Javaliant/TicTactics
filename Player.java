@@ -5,7 +5,7 @@ facilitates tracking the current player, provides symbol & style to be used
 
 public enum Player {
 	X("-fx-text-fill: darkred;"),
-	O("-fx-text-fill: gold;");
+	O("-fx-text-fill: royalblue;");
 
 	private final String style;
 

@@ -3,8 +3,8 @@
 public enum Winner {
 	NONE(""),
 	X("-fx-color: darkred;"),
-	O("-fx-color: gold"),
-	TIE("-fx-color: orangered;");
+	O("-fx-color: royalblue"),
+	TIE("-fx-color: indigo;");
 
 	private final String style;
 

@@ -5,6 +5,7 @@ Created for learning/fun and to complete CodeReview's Ultimate Tic Tac Toe commu
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class TicTactics extends Application {
@@ -14,8 +15,11 @@ public class TicTactics extends Application {
 
 	@Override
 	public void start(Stage stage) {
-		stage.setTitle("Tic Tactics by Legato");
-		stage.setScene(new Scene(new TicTacticsGame(stage)));
+		stage.setTitle("Tic Tactics");
+		Scene scene = new Scene(new TicTacticsGame(stage));
+		scene.getStylesheets().add("tictactics.css");
+		stage.setScene(scene);
+		stage.getIcons().add(new Image(getClass().getResourceAsStream("icon.png")));
 		stage.show();
 	}
 }
