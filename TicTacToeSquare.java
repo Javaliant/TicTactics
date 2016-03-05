@@ -16,6 +16,7 @@ public class TicTacToeSquare {
 				button.setStyle(game.getCurrentPlayer().getStyle());
 				board.evaluateState();
 				game.endTurn();
+				SoundPlayer.play("click");
 				game.board().disable();
 				game.board().enable(position);
 			}

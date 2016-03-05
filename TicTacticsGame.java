@@ -27,11 +27,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 
 public class TicTacticsGame extends BorderPane {
 	private StringProperty xPlayer = new SimpleStringProperty("X player");
 	private StringProperty oPlayer = new SimpleStringProperty("O player");
+	private StringProperty currentlyPlaying = new SimpleStringProperty("X player");
+	private Text playingText;
 	private IntegerProperty xScore = new SimpleIntegerProperty(0);
 	private IntegerProperty oScore = new SimpleIntegerProperty(0);
 	private IntegerProperty tieScore = new SimpleIntegerProperty(0);
@@ -41,7 +44,11 @@ public class TicTacticsGame extends BorderPane {
 
 	TicTacticsGame(Stage stage) {
 		board = new TicTacticsBoard(this);
-		setTop(generateMenuBar(stage));
+		HBox layout = new HBox();
+		MenuBar mainMenu = generateMenuBar(stage);
+		HBox.setHgrow(mainMenu, Priority.ALWAYS);
+		layout.getChildren().addAll(mainMenu, playingText);
+		setTop(layout);
 		setCenter(board);
 	}
 
@@ -75,6 +82,11 @@ public class TicTacticsGame extends BorderPane {
 			Bindings.concat("Ties: ").concat(tieScore.asString())
 		);
 
+		playingText = new Text();
+		playingText.textProperty().bind(
+			Bindings.concat(currentlyPlaying).concat("'s turn")
+		);
+
 		VBox scoreLayout = new VBox(5);
 		scoreLayout.getChildren().addAll(xText, oText, tieText);
 		scoreLayout.setPadding(new Insets(5));
@@ -96,7 +108,7 @@ public class TicTacticsGame extends BorderPane {
 
 		MenuItem resetItem = new MenuItem("_Reset score");
 		resetItem.setAccelerator(new KeyCodeCombination(KeyCode.R, KeyCombination.SHORTCUT_DOWN));
-		resetItem.setOnAction( e -> {
+		resetItem.setOnAction(e -> {
 			xScore.set(0);
 			oScore.set(0);
 			tieScore.set(0);
@@ -134,8 +146,6 @@ public class TicTacticsGame extends BorderPane {
 	}
 
 	public void endPrompt(String message) {
-		board.disable();
-
 		if (message.equals("It's a tie!")) {
 			tieScore.setValue(tieScore.getValue() + 1);
 		}
@@ -169,6 +179,7 @@ public class TicTacticsGame extends BorderPane {
 		stage.setScene(new Scene(layout, 175 + new Text(message).getLayoutBounds().getWidth(), 75));
 		stage.sizeToScene();
 		stage.setTitle("Game Over");
+		board.disable();
 		stage.show();
 	}
 
@@ -185,6 +196,7 @@ public class TicTacticsGame extends BorderPane {
 	private void newGame() {
 		board.boardCounter = 0;
 		currentPlayer = Player.X;
+		currentlyPlaying.setValue(xPlayer.getValue());
 		board.reset();
 	}
 
@@ -216,6 +228,8 @@ public class TicTacticsGame extends BorderPane {
 			if (!oString.replaceAll("[^a-zA-Z]", "").isEmpty()) {
 				oPlayer.setValue(oString);
 			}
+			currentlyPlaying.setValue(currentPlayer == Player.X ? xString : oString);
+
 			primaryStage.sizeToScene();
 			stage.close();
 		});
@@ -264,7 +278,13 @@ public class TicTacticsGame extends BorderPane {
 	}
 
 	public void endTurn() {
-		currentPlayer = currentPlayer == Player.X ? Player.O : Player.X;
+		if (currentPlayer == Player.X) {
+			currentPlayer = Player.O;
+			currentlyPlaying.setValue(oPlayer.getValue());
+		} else {
+			currentPlayer = Player.X;
+			currentlyPlaying.setValue(xPlayer.getValue());
+		}
 	}
 
 	public void evaluateBoard() {

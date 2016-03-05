@@ -34,6 +34,7 @@ public class TicTacticsBoard extends GridPane {
 		}
 
 		if (++boardCounter == NUMBER_OF_BOARDS) {
+			gameEnd();
 			game.endPrompt("It's a tie!");
 			return;
 		}
@@ -43,7 +44,9 @@ public class TicTacticsBoard extends GridPane {
 		if (boardCounter >= 3) {
 			if (board[innerBoard1].equivalentTo(board[innerBoard2]) 
 			&& board[innerBoard2].equivalentTo(board[innerBoard3])) {
+				gameEnd();
 				game.endPrompt(game.checkWinner(board[innerBoard1].winner().toString()) + " wins!");
+				SoundPlayer.play("game-won");
 				return true;
 			}
 		}
@@ -53,6 +56,12 @@ public class TicTacticsBoard extends GridPane {
 	public void disable() {
 		for (TicTacToeBoard b : board) {
 			b.disable();
+		}
+	}
+
+	public void gameEnd() {
+		for (TicTacToeBoard b : board) {
+			b.toggleGameStatus();
 		}
 	}
 
